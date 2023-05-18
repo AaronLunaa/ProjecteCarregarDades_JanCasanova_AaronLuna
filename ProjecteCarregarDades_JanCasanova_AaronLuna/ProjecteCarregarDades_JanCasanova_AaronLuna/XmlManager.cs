@@ -43,7 +43,7 @@ namespace ProjecteCarregarDades_JanCasanova_AaronLuna
             return movies;
         }
 
-        public void SaveMoviesToDatabase(List<Movie> movies)
+        public void SaveMoviesToDatabase(List<Movie> movies) //Credencials base de dades(administrador123, administrador)
         {
             // aqui va el codi per desar la informació de les pel·licules a la base de dades
         }
