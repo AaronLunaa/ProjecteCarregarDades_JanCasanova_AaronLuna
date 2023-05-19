@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace ProjecteCarregarDades_JanCasanova_AaronLuna
+namespace ProjecteCarregarDades_JanCasanova_AaronLuna.services
 {
     public class XmlManager
     {

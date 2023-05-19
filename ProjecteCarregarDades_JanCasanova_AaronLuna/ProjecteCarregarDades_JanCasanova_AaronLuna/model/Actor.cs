@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjecteCarregarDades_JanCasanova_AaronLuna
+namespace ProjecteCarregarDades_JanCasanova_AaronLuna.model
 {
     public class Actor
     {

@@ -1,4 +1,4 @@
-namespace ProjecteCarregarDades_JanCasanova_AaronLuna
+namespace ProjecteCarregarDades_JanCasanova_AaronLuna.model
 {
     internal static class Program
     {
