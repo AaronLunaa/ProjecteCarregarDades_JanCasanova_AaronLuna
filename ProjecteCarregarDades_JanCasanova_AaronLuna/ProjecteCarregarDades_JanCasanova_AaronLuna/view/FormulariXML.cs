@@ -3,6 +3,8 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
+using ProjecteCarregarDades_JanCasanova_AaronLuna.model;
+using ProjecteCarregarDades_JanCasanova_AaronLuna.services;
 
 namespace ProjecteCarregarDades_JanCasanova_AaronLuna
 {

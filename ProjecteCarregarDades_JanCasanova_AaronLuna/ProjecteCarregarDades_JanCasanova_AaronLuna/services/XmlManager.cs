@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic.Devices;
+using ProjecteCarregarDades_JanCasanova_AaronLuna.model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
