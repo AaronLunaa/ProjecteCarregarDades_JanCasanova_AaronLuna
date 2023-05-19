@@ -1706,19 +1706,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\jancp\\.nuget\\packages\\": {}
+    "C:\\Users\\aaron.luna\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jancp\\Documents\\M4\\projecte\\ProjecteCarregarDades_JanCasanova_AaronLuna\\ProjecteCarregarDades_JanCasanova_AaronLuna\\ProjecteCarregarDades_JanCasanova_AaronLuna.csproj",
+      "projectUniqueName": "C:\\Users\\aaron.luna\\Desktop\\PROJECTE GIT BBDD\\ProjecteCarregarDades_JanCasanova_AaronLuna\\ProjecteCarregarDades_JanCasanova_AaronLuna\\ProjecteCarregarDades_JanCasanova_AaronLuna.csproj",
       "projectName": "ProjecteCarregarDades_JanCasanova_AaronLuna",
-      "projectPath": "C:\\Users\\jancp\\Documents\\M4\\projecte\\ProjecteCarregarDades_JanCasanova_AaronLuna\\ProjecteCarregarDades_JanCasanova_AaronLuna\\ProjecteCarregarDades_JanCasanova_AaronLuna.csproj",
-      "packagesPath": "C:\\Users\\jancp\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jancp\\Documents\\M4\\projecte\\ProjecteCarregarDades_JanCasanova_AaronLuna\\ProjecteCarregarDades_JanCasanova_AaronLuna\\obj\\",
+      "projectPath": "C:\\Users\\aaron.luna\\Desktop\\PROJECTE GIT BBDD\\ProjecteCarregarDades_JanCasanova_AaronLuna\\ProjecteCarregarDades_JanCasanova_AaronLuna\\ProjecteCarregarDades_JanCasanova_AaronLuna.csproj",
+      "packagesPath": "C:\\Users\\aaron.luna\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\aaron.luna\\Desktop\\PROJECTE GIT BBDD\\ProjecteCarregarDades_JanCasanova_AaronLuna\\ProjecteCarregarDades_JanCasanova_AaronLuna\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\jancp\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\aaron.luna\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

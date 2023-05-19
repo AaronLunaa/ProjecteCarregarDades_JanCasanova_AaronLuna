@@ -1,0 +1,14 @@
+<!DOCTYPE catalog [
+  <!ELEMENT catalog (movie*)>
+  <!ELEMENT movie (title, genre, director, year, rating, actors)>
+  <!ATTLIST movie id CDATA #REQUIRED>
+  <!ELEMENT title (#PCDATA)>
+  <!ELEMENT genre (#PCDATA)>
+  <!ELEMENT director (#PCDATA)>
+  <!ELEMENT year (#PCDATA)>
+  <!ELEMENT rating (#PCDATA)>
+  <!ELEMENT actors (actor*)>
+  <!ELEMENT actor EMPTY>
+  <!ATTLIST actor name CDATA #REQUIRED>
+  <!ATTLIST actor role CDATA #REQUIRED>
+]>

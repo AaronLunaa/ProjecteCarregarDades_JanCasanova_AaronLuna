@@ -44,44 +44,80 @@ namespace ProjecteCarregarDades_JanCasanova_AaronLuna.services
 
             return movies;
         }
-
-        public void SaveMoviesToDatabase(List<Movie> movies) //Credencials base de dades(administrador123, administrador)
+        public void ImportDataToDatabase(string xmlFilePath)
         {
-            // aqui va el codi per desar la informació de les pel·licules a la base de dades
+            // Llegir el contingut del fitxer script.sql
+            string script = File.ReadAllText("script.sql");
 
-            string connectionString = "Server=db4free.net;Port=3306;Database=projectem02_m04;Uid=administrador;Pwd=administrador;";
-            MySqlConnection connection = new MySqlConnection(connectionString);
-
-            try
+            string connectionString = "Server=db4free.net;Port=3306;Database=projectem02_m04;Uid=administrador123;Pwd=administrador";
+            // Crear la connexió a la base de dades
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
+                // Obrir la connexió
                 connection.Open();
 
-                // Executar el script SQL per crear les taules
-                string scriptPath = "ruta_del_fitxer/script.sql";
-                string script = File.ReadAllText(scriptPath);
-                MySqlCommand scriptCommand = new MySqlCommand(script, connection);
-                scriptCommand.ExecuteNonQuery();
+                // Desactivar les restriccions de clau externa temporalment
+                MySqlCommand disableConstraintsCommand = new MySqlCommand("SET FOREIGN_KEY_CHECKS=0", connection);
+                disableConstraintsCommand.ExecuteNonQuery();
 
+                // Executar les instruccions SQL per crear les taules
+                MySqlCommand command = new MySqlCommand(script, connection);
+                command.ExecuteNonQuery();
+
+                // Llegir les pel·lícules des del fitxer XML
+                List<Movie> movies = ReadMoviesFromXml(xmlFilePath);
+
+                // Comandament per insertar les dades de les pel·lícules a la base de dades
+                MySqlCommand movieCommand = new MySqlCommand("INSERT INTO movies (id, title, genre, director, year, rating) VALUES (@id, @title, @genre, @director, @year, @rating)", connection);
+                movieCommand.Parameters.Add("@id", MySqlDbType.Int32);
+                movieCommand.Parameters.Add("@title", MySqlDbType.VarChar);
+                movieCommand.Parameters.Add("@genre", MySqlDbType.VarChar);
+                movieCommand.Parameters.Add("@director", MySqlDbType.VarChar);
+                movieCommand.Parameters.Add("@year", MySqlDbType.Int32);
+                movieCommand.Parameters.Add("@rating", MySqlDbType.Decimal);
+
+                // Comandament per insertar les dades dels actors a la base de dades
+                MySqlCommand actorCommand = new MySqlCommand("INSERT INTO actors (movie_id, name, role) VALUES (@movieId, @name, @role)", connection);
+                actorCommand.Parameters.Add("@movieId", MySqlDbType.Int32);
+                actorCommand.Parameters.Add("@name", MySqlDbType.VarChar);
+                actorCommand.Parameters.Add("@role", MySqlDbType.VarChar);
+
+                // Executar els comandaments per cada pel·lícula i actor, i insertar les dades a la base de dades
                 foreach (Movie movie in movies)
                 {
-                    // Aquí pots realitzar les operacions de base de dades per desar cada pel·lícula
-                    // ...
+                    // Insertar les dades de la pel·lícula
+                    movieCommand.Parameters["@id"].Value = movie.Id;
+                    movieCommand.Parameters["@title"].Value = movie.Title;
+                    movieCommand.Parameters["@genre"].Value = movie.Genre;
+                    movieCommand.Parameters["@director"].Value = movie.Director;
+                    movieCommand.Parameters["@year"].Value = movie.Year;
+                    movieCommand.Parameters["@rating"].Value = movie.Rating;
+
+                    movieCommand.ExecuteNonQuery();
+
+                    // Insertar les dades dels actors
+                    foreach (Actor actor in movie.Actors)
+                    {
+                        actorCommand.Parameters["@movieId"].Value = movie.Id;
+                        actorCommand.Parameters["@name"].Value = actor.Name;
+                        actorCommand.Parameters["@role"].Value = actor.Role;
+
+                        actorCommand.ExecuteNonQuery();
+                    }
                 }
 
-                // Altres operacions de base de dades...
+                // Activar de nou les restriccions de clau externa
+                MySqlCommand enableConstraintsCommand = new MySqlCommand("SET FOREIGN_KEY_CHECKS=1", connection);
+                enableConstraintsCommand.ExecuteNonQuery();
 
-                Console.WriteLine("Dades desarades amb èxit a la base de dades.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error de connexió o operació de base de dades: " + ex.Message);
-            }
-            finally
-            {
+                // Tancar la connexió
                 connection.Close();
             }
-
-
         }
+
+
+
+
+
     }
 }

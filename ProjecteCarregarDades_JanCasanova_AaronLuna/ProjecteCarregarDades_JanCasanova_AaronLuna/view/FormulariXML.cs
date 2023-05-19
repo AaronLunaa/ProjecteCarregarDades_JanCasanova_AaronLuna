@@ -40,7 +40,7 @@ namespace ProjecteCarregarDades_JanCasanova_AaronLuna
                     List<Movie> movies = xmlManager.ReadMoviesFromXml(nomFitxer);
 
                     // Desa les pel·lícules a la base de dades
-                    xmlManager.SaveMoviesToDatabase(movies);
+                    xmlManager.ImportDataToDatabase(nomFitxer);
 
                     // Mostra un missatge d'èxit o realitza altres accions necessàries
                     MessageBox.Show("Les dades s'han carregat a la base de dades.");
