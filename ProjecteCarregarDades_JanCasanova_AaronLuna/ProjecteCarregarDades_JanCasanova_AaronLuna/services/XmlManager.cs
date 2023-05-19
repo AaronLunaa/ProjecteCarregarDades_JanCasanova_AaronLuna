@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic.Devices;
+using MySql.Data.MySqlClient;
 using ProjecteCarregarDades_JanCasanova_AaronLuna.model;
 using System;
 using System.Collections.Generic;
@@ -47,6 +48,40 @@ namespace ProjecteCarregarDades_JanCasanova_AaronLuna.services
         public void SaveMoviesToDatabase(List<Movie> movies) //Credencials base de dades(administrador123, administrador)
         {
             // aqui va el codi per desar la informació de les pel·licules a la base de dades
+
+            string connectionString = "Server=db4free.net;Port=3306;Database=projectem02_m04;Uid=administrador;Pwd=administrador;";
+            MySqlConnection connection = new MySqlConnection(connectionString);
+
+            try
+            {
+                connection.Open();
+
+                // Executar el script SQL per crear les taules
+                string scriptPath = "ruta_del_fitxer/script.sql";
+                string script = File.ReadAllText(scriptPath);
+                MySqlCommand scriptCommand = new MySqlCommand(script, connection);
+                scriptCommand.ExecuteNonQuery();
+
+                foreach (Movie movie in movies)
+                {
+                    // Aquí pots realitzar les operacions de base de dades per desar cada pel·lícula
+                    // ...
+                }
+
+                // Altres operacions de base de dades...
+
+                Console.WriteLine("Dades desarades amb èxit a la base de dades.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error de connexió o operació de base de dades: " + ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+
         }
     }
 }
