@@ -1,4 +1,4 @@
-CREATE TRIGGER insert_actors_trigger AFTER INSERT ON movies
+CREATE OR REPLACE TRIGGER insert_actors_trigger AFTER INSERT ON movies
 FOR EACH ROW
 BEGIN
   -- Insereix un nom predeterminat a actors de la nova pel·lícula cuan es fa un insert a la taula actors

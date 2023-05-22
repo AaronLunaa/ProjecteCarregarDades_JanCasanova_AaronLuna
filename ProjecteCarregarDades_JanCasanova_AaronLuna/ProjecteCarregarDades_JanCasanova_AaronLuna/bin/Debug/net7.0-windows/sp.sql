@@ -2,34 +2,41 @@
 DROP PROCEDURE IF EXISTS GetMovieWithHighestRating;
 
 -- Crea el procediment emmagatzemat
-DELIMITER //
-
 CREATE PROCEDURE GetMovieWithHighestRating()
 BEGIN
-    -- Variable per emmagatzemar el rating més alt
+    -- Variable per emmagatzemar la puntuació màxima
     DECLARE highestRating DECIMAL(3,1);
-    
-    -- Obté el rating més alt de la taula de pel·lícules
-    SELECT MAX(rating) INTO highestRating FROM movies;
-    
-    -- Crea un fitxer XML amb la pel·lícula amb el rating més alt
-    SELECT 
-        m.id AS '@id',
-        m.title AS 'title',
-        m.genre AS 'genre',
-        m.director AS 'director',
-        m.year AS 'year',
-        m.rating AS 'rating',
-        (SELECT 
-            a.name AS '@name',
-            a.role AS '@role'
-         FROM actors a
-         WHERE a.movie_id = m.id
-         FOR XML PATH('actor'), TYPE)
-    FROM movies m
-    WHERE m.rating = highestRating
-    FOR XML PATH('movie'), ROOT('catalog'), TYPE
-    INTO 'highest_rated_movie.xml';
-END //
+    DECLARE xmlContent TEXT; -- Afegit: Definició del paràmetre '@xml'
 
-DELIMITER ;
+    -- Obté la puntuació màxima de la taula de pel·lícules
+    SELECT MAX(rating) INTO highestRating FROM movies;
+
+    -- Crea un fitxer XML amb la pel·lícula amb la puntuació més alta
+    SET xmlContent = CONCAT('<?xml version="1.0" encoding="UTF-8"?><catalog>',
+        (SELECT 
+            CONCAT('<movie id="', m.id, '">',
+                '<title>', m.title, '</title>',
+                '<genre>', m.genre, '</genre>',
+                '<director>', m.director, '</director>',
+                '<year>', m.year, '</year>',
+                '<rating>', m.rating, '</rating>',
+                '<actors>',
+                (SELECT 
+                    GROUP_CONCAT(CONCAT('<actor name="', a.name, '" role="', a.role, '")' SEPARATOR ',')
+                 FROM actors a
+                 WHERE a.movie_id = m.id),
+                '</actors>',
+                '</movie>')
+        FROM movies m
+        WHERE m.rating = highestRating)
+        ,'</catalog>');
+
+    -- Escriu el contingut XML al fitxer
+    SELECT xmlContent INTO OUTFILE 'highest_rated_movie.xml';
+END;
+
+
+
+
+
+
