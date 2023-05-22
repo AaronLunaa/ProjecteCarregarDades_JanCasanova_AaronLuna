@@ -115,9 +115,5 @@ namespace ProjecteCarregarDades_JanCasanova_AaronLuna.services
             }
         }
 
-
-
-
-
     }
 }
