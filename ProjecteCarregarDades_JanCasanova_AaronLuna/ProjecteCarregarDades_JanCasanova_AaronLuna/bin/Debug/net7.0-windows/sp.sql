@@ -1,18 +1,19 @@
 -- Elimina el procediment emmagatzemat si existeix
 DROP PROCEDURE IF EXISTS GetMovieWithHighestRating;
 
+
 -- Crea el procediment emmagatzemat
 CREATE PROCEDURE GetMovieWithHighestRating()
 BEGIN
     -- Variable per emmagatzemar la puntuació màxima
     DECLARE highestRating DECIMAL(3,1);
-    DECLARE xmlContent TEXT; -- Afegit: Definició del paràmetre '@xml'
+    DECLARE xml_result TEXT;
 
     -- Obté la puntuació màxima de la taula de pel·lícules
     SELECT MAX(rating) INTO highestRating FROM movies;
 
     -- Crea un fitxer XML amb la pel·lícula amb la puntuació més alta
-    SET xmlContent = CONCAT('<?xml version="1.0" encoding="UTF-8"?><catalog>',
+    SET xml_result = CONCAT('<?xml version="1.0" encoding="UTF-8"?><catalog>',
         (SELECT 
             CONCAT('<movie id="', m.id, '">',
                 '<title>', m.title, '</title>',
@@ -32,8 +33,8 @@ BEGIN
         ,'</catalog>');
 
     -- Escriu el contingut XML al fitxer
-    SELECT xmlContent INTO OUTFILE 'highest_rated_movie.xml';
-END;
+    SELECT xml_result AS XML_Result;
+END //;
 
 
 

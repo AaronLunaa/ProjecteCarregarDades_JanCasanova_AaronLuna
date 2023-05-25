@@ -3,11 +3,14 @@ using MySql.Data.MySqlClient;
 using ProjecteCarregarDades_JanCasanova_AaronLuna.model;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.IO;
+
 
 namespace ProjecteCarregarDades_JanCasanova_AaronLuna.services
 {
@@ -110,9 +113,61 @@ namespace ProjecteCarregarDades_JanCasanova_AaronLuna.services
                 MySqlCommand enableConstraintsCommand = new MySqlCommand("SET FOREIGN_KEY_CHECKS=1", connection);
                 enableConstraintsCommand.ExecuteNonQuery();
 
+                // Generar el fitxer XML des del stored procedure
+                GenerateXmlFileFromStoredProcedure();
+
                 // Tancar la connexió
                 connection.Close();
             }
+        }
+        
+        public static string getdades()
+        {
+            string resultVariable = string.Empty;
+            string connectionString = "Server=db4free.net;Port=3306;Database=projectem02_m04;Uid=administrador123;Pwd=administrador";
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (MySqlCommand command = new MySqlCommand("obtenirXML", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        if(reader.Read())
+                        {
+                            resultVariable = reader.GetString("XML_Result");
+                        }
+                        else
+                        { 
+                            resultVariable=string.Empty;
+                        }
+                    }
+                }
+
+                connection.Close();
+            }
+            return resultVariable;
+        }
+
+        public static void CreateXmlFile(string xmlContent, string filePath)
+        {
+            File.WriteAllText(filePath, xmlContent);
+        }
+
+        public static string GetXmlFilePath()
+        {
+            string currentDirectory = "../../../../../";
+            string fileName = "result.xml";
+            return Path.Combine(currentDirectory, fileName);
+        }
+
+        public static void GenerateXmlFileFromStoredProcedure()
+        {
+            string xmlContent = getdades();
+            string xmlFilePath = GetXmlFilePath();
+            CreateXmlFile(xmlContent, xmlFilePath);
         }
 
     }
