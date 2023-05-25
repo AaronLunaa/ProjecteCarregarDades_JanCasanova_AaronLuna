@@ -53,6 +53,10 @@ namespace ProjecteCarregarDades_JanCasanova_AaronLuna.services
             string script = File.ReadAllText("script.sql");
 
             string connectionString = "Server=db4free.net;Port=3306;Database=projectem02_m04;Uid=administrador123;Pwd=administrador";
+
+            string triggerFilePath = "trigger.sql"; // Canvia "ruta_del_fitxer" amb la ruta adequada
+            string triggerSql = File.ReadAllText(triggerFilePath);
+
             // Crear la connexió a la base de dades
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -109,12 +113,17 @@ namespace ProjecteCarregarDades_JanCasanova_AaronLuna.services
                     }
                 }
 
+                // Executar el contingut del fitxer trigger.sql
+                MySqlCommand triggerCommand = new MySqlCommand(triggerSql, connection);
+                triggerCommand.ExecuteNonQuery();
+
                 // Activar de nou les restriccions de clau externa
                 MySqlCommand enableConstraintsCommand = new MySqlCommand("SET FOREIGN_KEY_CHECKS=1", connection);
                 enableConstraintsCommand.ExecuteNonQuery();
 
                 // Generar el fitxer XML des del stored procedure
                 GenerateXmlFileFromStoredProcedure();
+
 
                 // Tancar la connexió
                 connection.Close();

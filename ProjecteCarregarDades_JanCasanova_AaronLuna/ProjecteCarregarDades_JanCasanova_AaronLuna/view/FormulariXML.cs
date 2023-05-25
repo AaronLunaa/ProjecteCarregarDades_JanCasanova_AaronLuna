@@ -5,6 +5,7 @@ using System.Xml.Linq;
 using System.Xml.Schema;
 using ProjecteCarregarDades_JanCasanova_AaronLuna.model;
 using ProjecteCarregarDades_JanCasanova_AaronLuna.services;
+using ProjecteCarregarDades_JanCasanova_AaronLuna.view;
 
 namespace ProjecteCarregarDades_JanCasanova_AaronLuna
 {
@@ -44,6 +45,11 @@ namespace ProjecteCarregarDades_JanCasanova_AaronLuna
 
                     // Mostra un missatge d'èxit o realitza altres accions necessàries
                     MessageBox.Show("Les dades s'han carregat a la base de dades.");
+
+                    // Obre la finestra de FormulariInsert
+                    FormulariInsert formulariInsert = new FormulariInsert();
+                    formulariInsert.Show();
+
                 }
                 else
                 {
