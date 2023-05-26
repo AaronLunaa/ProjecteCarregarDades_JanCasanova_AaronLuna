@@ -54,7 +54,7 @@ namespace ProjecteCarregarDades_JanCasanova_AaronLuna.services
 
             string connectionString = "Server=db4free.net;Port=3306;Database=projectem02_m04;Uid=administrador123;Pwd=administrador";
 
-            string triggerFilePath = "trigger.sql"; // Canvia "ruta_del_fitxer" amb la ruta adequada
+            string triggerFilePath = "trigger.sql"; 
             string triggerSql = File.ReadAllText(triggerFilePath);
 
             // Crear la connexió a la base de dades
